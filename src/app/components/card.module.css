@@ -1,0 +1,39 @@
+.card {
+    background: rgba(255, 255, 255, 0.1); /* Glass effect */
+    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    position: relative;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 8px;
+    pointer-events: none;
+    background: linear-gradient(45deg, cyan, magenta);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.card:hover::before {
+    opacity: 1;
+    box-shadow: 0 0 15px 5px rgba(0, 255, 255, 0.6);
+}
+
+.cardTitle {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.cardValue {
+    font-size: 1rem;
+    color: #00ffff;
+}
