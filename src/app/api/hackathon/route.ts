@@ -312,8 +312,10 @@ export async function GET(req: NextRequest) {
         // console.log("Privilege Token brrr", privilegeToken);
 
         const allSignalLatest = await getAllSignalsLatest(privilegeToken);
+        const carModel = await getCarModel();
         if (allSignalLatest && allSignalLatest!.data && allSignalLatest!.data.signalsLatest!) {
             return NextResponse.json({
+                make: carModel.data.vehicle.definition.make,
                 speed: allSignalLatest.data.signalsLatest!.speed.value,
                 latitude: allSignalLatest.data.signalsLatest!.currentLocationLatitude.value,
                 longitude: allSignalLatest.data.signalsLatest!.currentLocationLongitude.value,
