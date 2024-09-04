@@ -1,19 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Typography } from '@mui/material';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
+import CarMap from './CarMap';
+import DataButtons from './DataButtons';
 
-export default function PanelTwo({ data }) {
-  const [position, setPosition] = useState(undefined);
+interface DataType {
+  [key: string]: number | string;
+}
+
+export default function PanelTwo({ data }: { data: DataType | null }) {
+  const [position, setPosition] = useState<[number, number] | undefined>(undefined);
 
   useEffect(() => {
-    // Using parseFloat to correctly process latitude and longitude as numbers
     if (data?.latitude && data?.longitude) {
-      setPosition([parseFloat(data.latitude), parseFloat(data.longitude)]);
+      setPosition([parseFloat(data.latitude.toString()), parseFloat(data.longitude.toString())]);
     }
-  }, [data]); // This effect runs whenever 'data' changes
+  }, [data]);
 
-  // Render a loading state or null if the position is not yet available
+  const filteredKeys = [
+    'NSAT',
+    'lowVoltageBatteryCurrentVoltage',
+    'obdBarometricPressure',
+    'obdEngineLoad',
+    'obdIntakeTemp',
+    'engineMAF',
+    'engineSpeed',
+    'engineTPS',
+    'fuelSystemRelativeLevel',
+  ];
+
+  const filteredData = data ? Object.entries(data).filter(([key]) => filteredKeys.includes(key)) : [];
+
   if (!position) {
     return (
       <Box sx={{ flex: 3, bgcolor: '#1e1e1e', borderRadius: 10, p: 2, color: 'white', overflowY: 'auto' }}>
@@ -25,22 +41,9 @@ export default function PanelTwo({ data }) {
   return (
     <Box sx={{ flex: 3, bgcolor: '#1e1e1e', borderRadius: 10, p: 3, color: 'white', overflowY: 'auto' }}>
       <Box sx={{ height: 400, borderRadius: 10 }}>
-        <MapContainer
-          center={position}
-          zoom={15}
-          scrollWheelZoom={false}
-          style={{ height: "100%", width: "100%", borderRadius: 10 }}
-        >
-          <TileLayer
-            url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-          />
-          <Marker position={position}>
-            <Popup>
-              A pretty CSS3 popup. <br /> Easily customizable.
-            </Popup>
-          </Marker>
-        </MapContainer>
+        <CarMap position={position} />
       </Box>
+      <DataButtons data={filteredData} />
     </Box>
   );
 }

@@ -274,28 +274,28 @@ const main = async () => {
 
         // console.log("the other privilege token: " , privilegeToken);
 
-        if (allSignalLatest && allSignalLatest!.data && allSignalLatest!.data.signalsLatest) {
-                //console.log('Timestamp:', signal.timestamp);
-                console.log('Make:', carModel.data.vehicle.definition.make);
-                console.log('Speed:', allSignalLatest.data.signalsLatest.speed.value);
-                console.log('Latitude:', allSignalLatest.data.signalsLatest.currentLocationLatitude.value);
-                console.log('Longitude:', allSignalLatest.data.signalsLatest.currentLocationLongitude.value);
-                console.log('NSAT:', allSignalLatest.data.signalsLatest.dimoAftermarketNSAT.value);
-                console.log('Exterior Air Temperature:', allSignalLatest.data.signalsLatest.exteriorAirTemperature.value);
-                console.log('Low Voltage Battery Current Voltage:', allSignalLatest.data.signalsLatest.lowVoltageBatteryCurrentVoltage.value);
-                console.log('OBD Barometric Pressure:', allSignalLatest.data.signalsLatest.obdBarometricPressure.value);
-                console.log('OBD Engine Load:', allSignalLatest.data.signalsLatest.obdEngineLoad.value);
-                console.log('OBD Intake Temperature:', allSignalLatest.data.signalsLatest.obdIntakeTemp.value);
-                console.log('Engine MAF:', allSignalLatest.data.signalsLatest.powertrainCombustionEngineMAF.value);
-                console.log('Engine Speed:', allSignalLatest.data.signalsLatest.powertrainCombustionEngineSpeed.value);
-                console.log('Engine TPS:', allSignalLatest.data.signalsLatest.powertrainCombustionEngineTPS.value);
-                console.log('Fuel System Relative Level:', allSignalLatest.data.signalsLatest.powertrainFuelSystemRelativeLevel.value);
-                console.log('Transmission Travelled Distance:', allSignalLatest.data.signalsLatest.powertrainTransmissionTravelledDistance.value);
+        // if (allSignalLatest && allSignalLatest!.data && allSignalLatest!.data.signalsLatest) {
+        //         //console.log('Timestamp:', signal.timestamp);
+        //         console.log('Make:', carModel.data.vehicle.definition.make);
+        //         console.log('Speed:', allSignalLatest.data.signalsLatest.speed.value);
+        //         console.log('Latitude:', allSignalLatest.data.signalsLatest.currentLocationLatitude.value);
+        //         console.log('Longitude:', allSignalLatest.data.signalsLatest.currentLocationLongitude.value);
+        //         console.log('NSAT:', allSignalLatest.data.signalsLatest.dimoAftermarketNSAT.value);
+        //         console.log('Exterior Air Temperature:', allSignalLatest.data.signalsLatest.exteriorAirTemperature.value);
+        //         console.log('Low Voltage Battery Current Voltage:', allSignalLatest.data.signalsLatest.lowVoltageBatteryCurrentVoltage.value);
+        //         console.log('OBD Barometric Pressure:', allSignalLatest.data.signalsLatest.obdBarometricPressure.value);
+        //         console.log('OBD Engine Load:', allSignalLatest.data.signalsLatest.obdEngineLoad.value);
+        //         console.log('OBD Intake Temperature:', allSignalLatest.data.signalsLatest.obdIntakeTemp.value);
+        //         console.log('Engine MAF:', allSignalLatest.data.signalsLatest.powertrainCombustionEngineMAF.value);
+        //         console.log('Engine Speed:', allSignalLatest.data.signalsLatest.powertrainCombustionEngineSpeed.value);
+        //         console.log('Engine TPS:', allSignalLatest.data.signalsLatest.powertrainCombustionEngineTPS.value);
+        //         console.log('Fuel System Relative Level:', allSignalLatest.data.signalsLatest.powertrainFuelSystemRelativeLevel.value);
+        //         console.log('Transmission Travelled Distance:', allSignalLatest.data.signalsLatest.powertrainTransmissionTravelledDistance.value);
                 
-                console.log('---');
-        } else {
-            console.log('No data available.');
-        }
+        //         console.log('---');
+        // } else {
+        //     console.log('No data available.');
+        // }
 
 
         //console.log(allSignalLatest.data.signalsLatest.speed.value);

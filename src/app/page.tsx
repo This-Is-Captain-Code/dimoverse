@@ -26,7 +26,7 @@ export default function Page() {
             </Box>
             <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1, p: 2, boxSizing: 'border-box' }}>
                 <Box sx={{pb: 1}}>
-                    <Header/>
+                    <Header data={data}/>
                 </Box>
                 <MainContent data={data} />
             </Box>
