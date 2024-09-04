@@ -1,5 +1,5 @@
-import React from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import React, { useEffect } from 'react';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
 interface CarMapProps {
@@ -13,18 +13,29 @@ const carIcon = new L.DivIcon({
   iconAnchor: [12, 12],
 });
 
+function FlyToLocation({ position }: { position: [number, number] }) {
+  const map = useMap();
+
+  useEffect(() => {
+    map.flyTo(position, 15, { duration: 2 }); // duration in seconds
+  }, [position, map]);
+
+  return null;
+}
+
 export default function CarMap({ position }: CarMapProps) {
   return (
     <MapContainer
-      center={position}
-      zoom={15}
+      center={[0, 0]} // Start at coordinates (0, 0)
+      zoom={2} // Start with a world view zoom level
       scrollWheelZoom={false}
-      style={{ height: "100%", width: "100%", borderRadius: 10 }}
+      style={{ height: '100%', width: '100%', borderRadius: 10 }}
     >
       <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" />
       <Marker position={position} icon={carIcon}>
         <Popup>A pretty CSS3 popup. Easily customizable.</Popup>
       </Marker>
+      <FlyToLocation position={position} />
     </MapContainer>
   );
 }

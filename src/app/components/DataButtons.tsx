@@ -6,7 +6,7 @@ interface DataButtonsProps {
 }
 
 const GlassButton = styled(Button)({
-  background: 'rgba(255, 255, 255, 0.2)',
+  background: 'rgba(30, 30, 30, 1)',
   borderRadius: '10px',
   color: 'black',
   backdropFilter: 'blur(10px)',
