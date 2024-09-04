@@ -1,8 +1,11 @@
 "use client";
 
 import { useEffect, useState } from 'react';
+import { Box, Typography } from '@mui/material';
 import Card from './components/card';
-import styles from './page.module.css';
+import Sidebar from './components/sidebar';
+import Header from './components/Header';
+import MainContent from './components/MainContent';
 
 export default function Page() {
     const [data, setData] = useState(null);
@@ -17,17 +20,16 @@ export default function Page() {
     }, []);
 
     return (
-        <div className={styles.container}>
-            <h1 className={styles.header}>Hackathon Data</h1>
-            <div className={styles.cardContainer}>
-                {data ? (
-                    Object.entries(data).map(([key, value]) => (
-                        <Card key={key} title={key} value={value} />
-                    ))
-                ) : (
-                    <p className={styles.loadingText}>Loading...</p>
-                )}
-            </div>
-        </div>
+        <Box sx={{ display: 'flex', height: '100vh', width: '100vw', bgcolor: '#121212' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '80px' }}>
+                <Sidebar />
+            </Box>
+            <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1, p: 2, boxSizing: 'border-box' }}>
+                <Box sx={{pb: 1}}>
+                    <Header/>
+                </Box>
+                <MainContent data={data} />
+            </Box>
+        </Box>
     );
 }

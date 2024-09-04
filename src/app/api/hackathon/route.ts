@@ -18,6 +18,22 @@ const getAvailableSignals = async (privilegeToken: string) => {
     });
 }
 
+const getCarModel = async () => {
+    const carModel = await dimo.identity.query({
+        query: `
+            {
+                vehicle(tokenId: 21957) {
+                    definition {
+                        make
+                        model
+                        year
+                    }
+                }
+            }
+        `
+    });
+    return carModel;
+}
 const getAverageSpeed = async (privilegeToken: string) => {
     const avgSpeed = await dimo.telemetry.query({
         query: `
@@ -254,11 +270,13 @@ const main = async () => {
         // }
         
         const allSignalLatest = await getAllSignalsLatest(privilegeToken);
+        const carModel = await getCarModel();
 
         // console.log("the other privilege token: " , privilegeToken);
 
         if (allSignalLatest && allSignalLatest!.data && allSignalLatest!.data.signalsLatest) {
                 //console.log('Timestamp:', signal.timestamp);
+                console.log('Make:', carModel.data.vehicle.definition.make);
                 console.log('Speed:', allSignalLatest.data.signalsLatest.speed.value);
                 console.log('Latitude:', allSignalLatest.data.signalsLatest.currentLocationLatitude.value);
                 console.log('Longitude:', allSignalLatest.data.signalsLatest.currentLocationLongitude.value);
@@ -273,6 +291,7 @@ const main = async () => {
                 console.log('Engine TPS:', allSignalLatest.data.signalsLatest.powertrainCombustionEngineTPS.value);
                 console.log('Fuel System Relative Level:', allSignalLatest.data.signalsLatest.powertrainFuelSystemRelativeLevel.value);
                 console.log('Transmission Travelled Distance:', allSignalLatest.data.signalsLatest.powertrainTransmissionTravelledDistance.value);
+                
                 console.log('---');
         } else {
             console.log('No data available.');
@@ -290,7 +309,7 @@ export async function GET(req: NextRequest) {
     try {
         const accessToken = 'eyJhbGciOiJSUzI1NiIsImtpZCI6IjMzMjU3ZDFiZjliZTdlNTg4ZDM1OTI3MzhhMmFhOTY5ODU3NWM4OTEifQ.eyJpc3MiOiJodHRwczovL2F1dGguZGltby56b25lIiwicHJvdmlkZXJfaWQiOiJ3ZWIzIiwic3ViIjoiQ2lvd2VHRkVPVEJCTlRZMU4wRXpNMEl5TlRVM016VTVRV0l4T1dGaE9UUTRNREpHTnpNM00wWTNPRGNTQkhkbFlqTSIsImF1ZCI6IjB4YUQ5MEE1NjU3QTMzQjI1NTczNTlBYjE5YWE5NDgwMkY3MzczRjc4NyIsImV4cCI6MTcyNjUyODI5NCwiaWF0IjoxNzI1MzE4Njk0LCJhdF9oYXNoIjoiZEpCODFnZlp4eGFnemFWWDFyUVYwUSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZXRoZXJldW1fYWRkcmVzcyI6IjB4YUQ5MEE1NjU3QTMzQjI1NTczNTlBYjE5YWE5NDgwMkY3MzczRjc4NyJ9.VM47fK07iJLteOmffwEE68gjPFVuZ3YZscrZuDlkteKz3oHdAislYPq3M2rOEZ4KMrvu-b7CqXSB0lfJCTr0yz_o-qbwSPnZ_2fn8DY85InTaLxJeiqLCkoaTudDm2aLG-05ea75Km6e_5XfounOYJhBgHP2gMrad4x4HDnisQztQbE4K0hGUo09d8KBElVEaDAbnRIYvepcohgOQHnxDJUGBX06hN_GLT1x3_OcFH_yZr3KEqTqdc0U2X3mCyW3CKV0tyDcC0HmhNXDVmCRboQrIBfn1C0wYmvlxyMKTYbHlUPH1mhTcRQxdiSF8PO8r4pyKc8plmz6ElR2lGdcNA';  // Use a secure way to handle tokens
         const privilegeToken = await getPrivilegeToken(accessToken);
-        console.log("Privilege Token brrr", privilegeToken);
+        // console.log("Privilege Token brrr", privilegeToken);
 
         const allSignalLatest = await getAllSignalsLatest(privilegeToken);
         if (allSignalLatest && allSignalLatest!.data && allSignalLatest!.data.signalsLatest!) {

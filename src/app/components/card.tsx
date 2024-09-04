@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './Card.module.css';
+import { Box, Typography } from '@mui/material';
 
 interface CardProps {
     title: string;
@@ -8,9 +8,13 @@ interface CardProps {
 
 export default function Card({ title, value }: CardProps) {
     return (
-        <div className={styles.card}>
-            <h2 className={styles.cardTitle}>{title}</h2>
-            <p className={styles.cardValue}>{value}</p>
-        </div>
+        <Box sx={{ bgcolor: '#2c2c2c', borderRadius: 2, p: 2, mb: 2 }}>
+            <Typography variant="h6" sx={{ color: 'white', mb: 1 }}>
+                {title}
+            </Typography>
+            <Typography variant="body1" sx={{ color: 'white' }}>
+                {value}
+            </Typography>
+        </Box>
     );
 }
