@@ -23,8 +23,7 @@ export default function PanelTwo({ data }) {
   }
 
   return (
-    <Box sx={{ flex: 3, bgcolor: '#1e1e1e', borderRadius: 10, p: 2, color: 'white', overflowY: 'auto' }}>
-      <Typography variant="h6">Panel 2</Typography>
+    <Box sx={{ flex: 3, bgcolor: '#1e1e1e', borderRadius: 10, p: 3, color: 'white', overflowY: 'auto' }}>
       <Box sx={{ height: 400, borderRadius: 10 }}>
         <MapContainer
           center={position}

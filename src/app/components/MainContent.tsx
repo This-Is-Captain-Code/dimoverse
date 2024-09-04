@@ -6,7 +6,7 @@ import PanelTwo from './PanelTwo';
 
 export default function MainContent({ data }) {
     return (
-        <Box sx={{ display: 'flex', flex: 1, gap: 2, p: 2 }}>
+        <Box sx={{ display: 'flex', flex: 1, gap: 5, p: 2 }}>
                     <PanelOne data={data} />
                     <PanelTwo data={data} />
                     {/* <Box sx={{ flex: 3, bgcolor: '#1e1e1e', borderRadius: 10, p: 2, color: 'white', overflowY: 'auto' }}>
