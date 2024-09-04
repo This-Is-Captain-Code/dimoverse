@@ -316,6 +316,8 @@ export async function GET(req: NextRequest) {
         if (allSignalLatest && allSignalLatest!.data && allSignalLatest!.data.signalsLatest!) {
             return NextResponse.json({
                 make: carModel.data.vehicle.definition.make,
+                model: carModel.data.vehicle.definition.model,
+                year: carModel.data.vehicle.definition.year,
                 speed: allSignalLatest.data.signalsLatest!.speed.value,
                 latitude: allSignalLatest.data.signalsLatest!.currentLocationLatitude.value,
                 longitude: allSignalLatest.data.signalsLatest!.currentLocationLongitude.value,

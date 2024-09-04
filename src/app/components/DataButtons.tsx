@@ -1,8 +1,13 @@
 import React from 'react';
 import { Box, Typography, Button, styled } from '@mui/material';
 
+interface DataEntry {
+  name: string;
+  value: number | string;
+}
+
 interface DataButtonsProps {
-  data: [string, number | string][];
+  data: DataEntry[];
 }
 
 const GlassButton = styled(Button)({
@@ -30,22 +35,19 @@ export default function DataButtons({ data }: DataButtonsProps) {
         marginTop: 4,
       }}
     >
-      {data.map(([key, value]) => (
-        <Box key={key} sx={{ flex: 1, mb: 1 }}>
-            <Box key={key} sx={{ flex: 1, mb: 1 }}>
-                <GlassButton fullWidth variant="contained" sx={{ height: '80px' }}>
-                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <Typography variant="subtitle1" sx={{ color: '#FFFFFF', textTransform: 'none' }}>
-                        {key}
-                    </Typography>
-                    <Typography variant="h6" sx={{ color: '#FFFFFF', textTransform: 'none', marginTop: '4px' }}>
-                        {value}
-                    </Typography>
-                    </Box>
-                </GlassButton>
+      {data.map(({ name, value }) => (
+        <Box key={name} sx={{ flex: 1, mb: 1 }}>
+          <GlassButton fullWidth variant="contained" sx={{ height: '80px' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <Typography variant="subtitle1" sx={{ color: '#FFFFFF', textTransform: 'none' }}>
+                {name}
+              </Typography>
+              <Typography variant="h6" sx={{ color: '#FFFFFF', textTransform: 'none', marginTop: '4px' }}>
+                {value}
+              </Typography>
             </Box>
-
-      </Box>
+          </GlassButton>
+        </Box>
       ))}
     </Box>
   );
