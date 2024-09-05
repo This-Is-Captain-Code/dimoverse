@@ -60,40 +60,6 @@ const getAverageSpeed = async (privilegeToken: string) => {
 }
 
 
-// const getAllSignals = async (privilegeToken: string) => {
-//     const allSignal = await dimo.telemetry.query({
-//         query: `
-//             {
-//                 signals(
-//                     tokenId: 21957,
-//                     from: "2024-08-01T00:00:00Z",
-//                     to: "2024-08-30T00:00:00Z",
-//                     interval: "24h"
-//                 ) {
-//                     timestamp
-//                     speed(agg: MED)
-//                     currentLocationLatitude(agg: RAND)
-//                     currentLocationLongitude(agg: RAND)
-//                     dimoAftermarketNSAT(agg: RAND)
-//                     exteriorAirTemperature(agg: MAX)
-//                     lowVoltageBatteryCurrentVoltage(agg: MIN)
-//                     obdBarometricPressure(agg: MIN)
-//                     obdEngineLoad(agg: MAX)
-//                     obdIntakeTemp(agg: MAX)
-//                     powertrainCombustionEngineMAF(agg: MED)
-//                     powertrainCombustionEngineSpeed(agg: MED)
-//                     powertrainCombustionEngineTPS(agg: MED)
-//                     powertrainFuelSystemRelativeLevel(agg: MIN)
-//                     powertrainTransmissionTravelledDistance(agg: MAX)
-//                 }
-//             }
-//         `,
-//         headers: {
-//             'Authorization': `Bearer ${privilegeToken}`
-//         },
-//     });
-// }
-
 const getAllSignals = async (privilegeToken: string) => {
     const allSignal = await dimo.telemetry.query({
         query: `
@@ -307,6 +273,10 @@ const main = async () => {
 
 export async function GET(req: NextRequest) {
     try {
+        const headers = new Headers({
+            'Cache-Control': 'no-store',
+        });
+
         const accessToken = 'eyJhbGciOiJSUzI1NiIsImtpZCI6IjMzMjU3ZDFiZjliZTdlNTg4ZDM1OTI3MzhhMmFhOTY5ODU3NWM4OTEifQ.eyJpc3MiOiJodHRwczovL2F1dGguZGltby56b25lIiwicHJvdmlkZXJfaWQiOiJ3ZWIzIiwic3ViIjoiQ2lvd2VHRkVPVEJCTlRZMU4wRXpNMEl5TlRVM016VTVRV0l4T1dGaE9UUTRNREpHTnpNM00wWTNPRGNTQkhkbFlqTSIsImF1ZCI6IjB4YUQ5MEE1NjU3QTMzQjI1NTczNTlBYjE5YWE5NDgwMkY3MzczRjc4NyIsImV4cCI6MTcyNjUyODI5NCwiaWF0IjoxNzI1MzE4Njk0LCJhdF9oYXNoIjoiZEpCODFnZlp4eGFnemFWWDFyUVYwUSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZXRoZXJldW1fYWRkcmVzcyI6IjB4YUQ5MEE1NjU3QTMzQjI1NTczNTlBYjE5YWE5NDgwMkY3MzczRjc4NyJ9.VM47fK07iJLteOmffwEE68gjPFVuZ3YZscrZuDlkteKz3oHdAislYPq3M2rOEZ4KMrvu-b7CqXSB0lfJCTr0yz_o-qbwSPnZ_2fn8DY85InTaLxJeiqLCkoaTudDm2aLG-05ea75Km6e_5XfounOYJhBgHP2gMrad4x4HDnisQztQbE4K0hGUo09d8KBElVEaDAbnRIYvepcohgOQHnxDJUGBX06hN_GLT1x3_OcFH_yZr3KEqTqdc0U2X3mCyW3CKV0tyDcC0HmhNXDVmCRboQrIBfn1C0wYmvlxyMKTYbHlUPH1mhTcRQxdiSF8PO8r4pyKc8plmz6ElR2lGdcNA';  // Use a secure way to handle tokens
         const privilegeToken = await getPrivilegeToken(accessToken);
         // console.log("Privilege Token brrr", privilegeToken);

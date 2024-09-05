@@ -1,43 +1,86 @@
-// RadialChart.tsx
-import React from 'react';
-import ReactApexChart from 'react-apexcharts';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import SettingsIcon from '@mui/icons-material/Settings';
+import React, { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
+import { Box } from '@mui/material';
 
-const RadialChart: React.FC<{ series: number[] }> = ({ series }) => {
-  const options = {
-    chart: {
-      type: 'radialBar',
-    },
+// Dynamically import Chart to avoid SSR issues
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
+
+const RadialChart = ({ 
+  value, 
+  label, 
+  valueColor, 
+  labelColor, 
+  chartHeight, 
+  chartWidth, 
+  fontSizeValue, 
+  hollowSize, 
+  trackStrokeWidth 
+}) => {
+
+  const [chartData, setChartData] = useState({
+    value: 0,
+    label: '',
+  });
+
+  useEffect(() => {
+    // Validate the value and label before rendering the chart
+    if (value !== undefined && label !== undefined) {
+      setChartData({ value, label });
+    }
+  }, [value, label]);
+
+  const generateChartOptions = () => ({
+    series: [chartData.value],
     plotOptions: {
       radialBar: {
+        startAngle: -135,
+        endAngle: 135,
         hollow: {
-          size: '70%',
+          margin: 0,
+          size: hollowSize,
+          background: 'rgba(23, 23, 23, 0)',
+        },
+        track: {
+          background: 'rgba(23, 23, 23, 10)',
+          strokeWidth: trackStrokeWidth,
         },
         dataLabels: {
-          name: {
-            show: false,
-          },
-          value: {
-            fontSize: '22px',
-            show: true,
-          },
-        },
-      },
+          name: { color: labelColor, fontSize: '15px' },
+          value: { 
+            formatter: (val) => parseInt(val), 
+            color: valueColor, 
+            fontSize: fontSizeValue 
+          }
+        }
+      }
     },
-    labels: ['Progress'],
-  };
+    fill: { type: 'gradient', gradient: { stops: [0, 100] } },
+    stroke: { lineCap: 'round' },
+    labels: [chartData.label],
+  });
 
-  // Let's assume the number you want to display is the first item in the series array
-  const displayNumber = series[0];
+  if (!chartData.value || !chartData.label) {
+    return <div>Loading...</div>; // Handle loading state while data is being prepared
+  }
 
   return (
-    <Box sx={{ textAlign: 'center' }}> {/* Ensures content is centered */}
-      <SettingsIcon sx={{ marginBottom: '8px' }} /> {/* Icon */}
-      <Typography variant="h6" sx={{ marginBottom: '8px' }}>Progression</Typography>
-      <ReactApexChart options={options} series={series} type="radialBar" height="200" />
-      <Typography variant="body1">{displayNumber}%</Typography> {/* Display Number */}
+    <Box
+      sx={{
+        height: `${chartHeight}px`,
+        width: `${chartWidth}px`,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '0px',
+      }}
+    >
+      <Chart
+        options={generateChartOptions()}
+        series={[chartData.value]}
+        type="radialBar"
+        height={chartHeight}
+        width={chartWidth}
+      />
     </Box>
   );
 };
