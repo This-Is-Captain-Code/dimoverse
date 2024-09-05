@@ -33,7 +33,7 @@ export default function CarMap({ position }: CarMapProps) {
     >
       <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" />
       <Marker position={position} icon={carIcon}>
-        <Popup>A pretty CSS3 popup. Easily customizable.</Popup>
+        <Popup>Your Vehicle's Current Location</Popup>
       </Marker>
       <FlyToLocation position={position} />
     </MapContainer>

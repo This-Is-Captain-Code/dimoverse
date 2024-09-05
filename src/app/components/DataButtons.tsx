@@ -11,11 +11,11 @@ interface DataButtonsProps {
 }
 
 const GlassButton = styled(Button)({
-  background: 'rgba(30, 30, 30, 1)',
+  background: '#1a1a1a',
   borderRadius: '10px',
   color: 'black',
   backdropFilter: 'blur(10px)',
-  border: '1px solid rgba(255, 255, 255, 0.3)',
+  // border: '1px solid rgba(255, 255, 255, 0.3)',
   boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
   transition: 'transform 0.2s, box-shadow 0.2s',
   '&:hover': {
@@ -37,12 +37,12 @@ export default function DataButtons({ data }: DataButtonsProps) {
     >
       {data.map(({ name, value }) => (
         <Box key={name} sx={{ flex: 1, mb: 1 }}>
-          <GlassButton fullWidth variant="contained" sx={{ height: '80px' }}>
+          <GlassButton fullWidth variant="contained" sx={{ height: '120px' }}>
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <Typography variant="subtitle1" sx={{ color: '#FFFFFF', textTransform: 'none' }}>
+              <Typography font='Roboto' fontWeight='light' sx={{ color: '#FFFFFF', textTransform: 'none' }}>
                 {name}
               </Typography>
-              <Typography variant="h6" sx={{ color: '#FFFFFF', textTransform: 'none', marginTop: '4px' }}>
+              <Typography variant="body1" sx={{ color: '#FFFFFF', textTransform: 'none', marginTop: '4px' }}>
                 {value}
               </Typography>
             </Box>

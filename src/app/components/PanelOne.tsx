@@ -193,7 +193,7 @@ export default memo(function PanelOne({ data }) {
                 </Canvas>
             </Box>
         
-            <Box sx={{ flex: 1, bgcolor: 'rgba(23, 23, 23, 0.7)', borderRadius: '100px 100px 0 0', backdropFilter: 'blur(20px)', border: '1px solid rgba(255, 255, 255, 0.2)' }}>
+            <Box sx={{ flex: 1, bgcolor: 'rgba(23, 23, 23, 0.4)', borderRadius: '100px 100px 0 0', backdropFilter: 'blur(20px)', border: '1px solid rgba(255, 255, 255, 0.2)' }}>
                 {/* ApexCharts Radial Bar Chart */}
                 <Box
                     sx={{
