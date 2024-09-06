@@ -8,7 +8,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 
 export default function Sidebar() {
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 2, pl: 4 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, pl: 4, pt: 30 }}>
             <IconButton sx={{ bgcolor: '#181818', color: 'white', borderRadius: '50%', width: 75, height: 75 }}>
                 <HomeIcon />
             </IconButton>

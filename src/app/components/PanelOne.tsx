@@ -1,6 +1,6 @@
 import React, { Suspense, memo } from 'react';
 import { Box, Typography } from '@mui/material';
-import { Canvas  } from '@react-three/fiber';
+import { Canvas } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import Speedometer from './Speedometer';
 import RadialChart from './RadialChart';
@@ -8,9 +8,26 @@ import CarModel from './CarModel';
 import { DirectionalLight } from 'three';
 
 const PanelOne = memo(({ data }) => {
-  const { make: carMake, model: carModel, year: carYear, speed: carSpeed, obdEngineLoad: carRPM, fuelSystemRelativeLevel: carFuel, transmissionTravelledDistance: carDistance } = data || {};
-
-  const chartValues = [
+  const {
+    make: carMake,
+    model: carModel,
+    year: carYear,
+    signals: {
+      speed: { value: carSpeed } = {},
+      powertrainFuelSystemRelativeLevel: { value: carFuel } = {}, // For non-Tesla
+      powertrainTransmissionTravelledDistance: { value: carDistance } = {},
+      powertrainCombustionEngineMAF: { value: carRPM } = {}, // For non-Tesla
+      powertrainRange: { value: carRange } = {}, // For Tesla
+      powertrainTractionBatteryChargingChargeLimit: { value: carChargeLimit } = {}, // For Tesla
+    } = {}
+  } = data || {};
+  
+  // Dynamically adjust chart based on vehicle make
+  const chartValues = carMake === 'Tesla' ? [
+    { value: carRange, label: 'Range', valueColor: 'rgb(161, 209, 241)', labelColor: 'rgb(161, 209, 241)' },
+    { value: carDistance, label: 'Distance', valueColor: 'rgb(193, 254, 212)', labelColor: 'rgb(193, 254, 212)' },
+    { value: carChargeLimit, label: 'Charge Limit', valueColor: 'rgb(149, 205, 244)', labelColor: 'rgb(149, 205, 244)' }
+  ] : [
     { value: carFuel, label: 'Fuel', valueColor: 'rgb(161, 209, 241)', labelColor: 'rgb(161, 209, 241)' },
     { value: carDistance, label: 'Distance', valueColor: 'rgb(193, 254, 212)', labelColor: 'rgb(193, 254, 212)' },
     { value: carRPM, label: 'RPM', valueColor: 'rgb(149, 205, 244)', labelColor: 'rgb(149, 205, 244)' }
@@ -23,46 +40,46 @@ const PanelOne = memo(({ data }) => {
           {carMake + ' ' || 'Loading...'}
         </Typography>
         <Typography variant="h5" component="span" sx={{ display: 'inline', color: 'lightgrey' }}>
-          {carModel + '' || ' '}
+          {carModel + ' ' || ' '}
         </Typography>
         <Typography variant="body2" component="span" sx={{ display: 'inline', color: 'grey' }}>
-          {' '+carYear|| ' '}
+          {' ' + carYear || ' '}
         </Typography>
       </Typography>
 
       <Box sx={{ height: 300, width: '100%' }}>
         <Canvas>
-          <PerspectiveCamera makeDefault fov={20} position={[0, 0, 20]} />
+          <PerspectiveCamera makeDefault fov={20} position={[0, 0, 30]} />
           <ambientLight intensity={2} />
           <pointLight position={[100, 100, 100]} />
-          <directionalLight color = 'white' intensity = {20}/>
+          <directionalLight color='white' intensity={20} />
           <Suspense fallback={null}>
-            <CarModel />
+            <CarModel carMake={carMake} />
           </Suspense>
           <OrbitControls target={[0, 0, 0]} enableZoom />
         </Canvas>
       </Box>
 
-      <Box sx={{ flex: 1, bgcolor: 'rgba(23, 23, 23, 0.4)', borderRadius: '100px 100px 0 0', backdropFilter: 'blur(20px)', border: '1px solid rgba(255, 255, 255, 0.2)', overflowX:'hidden' }}>
-        <Box sx={{ display: 'flex', justifyContent: 'center', height: '150px', width: '200px', gap: '0px', overflowX: 'none', pl: 17.6, margin: 0 }}>
-            {chartValues.map((item, index) => (
-                <RadialChart
-                    key={index}
-                    value={item.value}
-                    label={item.label}
-                    valueColor={item.valueColor}
-                    labelColor={item.labelColor}
-                    chartHeight={200}  // Control height here
-                    chartWidth={180}   // Control width here
-                    fontSizeValue={'20px'}
-                    hollowSize={'70%'}
-                    trackStrokeWidth={'50%'}
-                />
-            ))}
+      <Box sx={{ flex: 1, bgcolor: 'rgba(23, 23, 23, 0.4)', borderRadius: '100px 100px 0 0', backdropFilter: 'blur(20px)', border: '1px solid rgba(255, 255, 255, 0.2)', overflowX: 'hidden' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', height: '150px', width: '200px', gap: '0px', overflowX: 'none', pl: 17.3, pt: 1, margin: 0 }}>
+          {chartValues.map((item, index) => (
+            <RadialChart
+              key={index}
+              value={item.value}
+              label={item.label}
+              valueColor={item.valueColor}
+              labelColor={item.labelColor}
+              chartHeight={200}  // Control height here
+              chartWidth={160}   // Control width here
+              fontSizeValue={'20px'}
+              hollowSize={'70%'}
+              trackStrokeWidth={'50%'}
+            />
+          ))}
         </Box>
 
-        <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-          <Speedometer speed={carSpeed} imageSize="200px" />
+        <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', pt: 4 }}>
+          <Speedometer speed={Math.round(carSpeed)} imageSize="200px" />
         </Box>
       </Box>
     </Box>

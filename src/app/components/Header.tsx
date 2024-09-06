@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Typography, Button, IconButton } from '@mui/material';
-import NotificationsIcon from '@mui/icons-material/Notifications'; // Example icon, replace with your preferred icon
+import { Box, Typography, Button } from '@mui/material';
 
-export default function Header({data}) {
+export default function Header({ data }: { data: any }) {
     const [currentTime, setCurrentTime] = useState('');
     const [currentDate, setCurrentDate] = useState('');
     const [carExteriorTemperatureString, setCarExteriorTemperatureString] = useState('');
 
     useEffect(() => {
-        if (data! && data!.exteriorAirTemperature !== undefined) {
-            setCarExteriorTemperatureString(String(data!.exteriorAirTemperature));
+        if (data?.signals?.exteriorAirTemperature?.value !== undefined) {
+            setCarExteriorTemperatureString(String(data.signals.exteriorAirTemperature.value));
         }
     }, [data]);
 
@@ -34,17 +33,18 @@ export default function Header({data}) {
     }, []);
 
     return (
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pl: 3,pb: 1 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pl: 3, pb: 1 }}>
             <Box sx={{ display: 'flex', flexDirection: 'column', color: 'white' }}>
                 <Typography variant="h4" sx={{ fontWeight: 'bold' }}>{currentTime}</Typography>
                 <Typography variant="body2" sx={{ color: '#aaa' }}>{currentDate}</Typography>
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                <Typography variant="body3" sx={{ color: 'white' }}>Exterior Temperature: {carExteriorTemperatureString || 'Loading...'}°F</Typography>
+                <Typography variant="body3" sx={{ color: 'white' }}>
+                    Exterior Temperature: {carExteriorTemperatureString || 'Loading...'}°F
+                </Typography>
                 <Button variant="contained" sx={{ bgcolor: '#333', color: 'white', borderRadius: 1 }}>
                     Login
                 </Button>
-                
             </Box>
         </Box>
     );

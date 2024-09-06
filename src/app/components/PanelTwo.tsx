@@ -4,7 +4,7 @@ import CarMap from './CarMap';
 import DataButtons from './DataButtons';
 
 interface DataType {
-  [key: string]: number | string;
+  [key: string]: any;
 }
 
 interface DataEntry {
@@ -16,25 +16,49 @@ export default function PanelTwo({ data }: { data: DataType | null }) {
   const [position, setPosition] = useState<[number, number] | undefined>(undefined);
 
   useEffect(() => {
-    if (data?.latitude && data?.longitude) {
-      setPosition([parseFloat(data.latitude.toString()), parseFloat(data.longitude.toString())]);
+    if (data?.signals?.currentLocationLatitude?.value && data?.signals?.currentLocationLongitude?.value) {
+      setPosition([
+        parseFloat(data.signals.currentLocationLatitude.value.toString()),
+        parseFloat(data.signals.currentLocationLongitude.value.toString())
+      ]);
     }
   }, [data]);
 
   const keyToName: { [key: string]: string } = {
-    'NSAT': '# of Satellites',
+    'dimoAftermarketNSAT': 'Satellites',
     'lowVoltageBatteryCurrentVoltage': 'Voltage',
     'obdBarometricPressure': 'Pressure',
     'obdIntakeTemp': 'Intake Temp',
-    'engineMAF': 'Engine MAF',
-    'engineTPS': 'Engine TPS',
-  };
-
+    'powertrainCombustionEngineMAF': 'MAF',
+    'powertrainCombustionEngineTPS': 'TPS',
+    'chassisAxleRow1WheelLeftTirePressure': 'Front Left Tire',
+    'chassisAxleRow1WheelRightTirePressure': 'Front Right Tire',
+    'chassisAxleRow2WheelLeftTirePressure': 'Rear Left Tire',
+    'chassisAxleRow2WheelRightTirePressure': 'Rear Right Tire',
+    'currentLocationAltitude': 'Altitude',
+    'currentLocationIsRedacted': 'Redacted',
+    'dimoAftermarketHDOP': 'HDOP',
+    'dimoAftermarketSSID': 'SSID',
+    'dimoAftermarketWPAState': 'WPA State',
+    'obdEngineLoad': 'Engine Load',
+    'obdRunTime': 'Run Time',
+    'powertrainCombustionEngineECT': 'Coolant Temp',
+    'powertrainCombustionEngineSpeed': 'Engine Speed',
+    'powertrainFuelSystemSupportedFuelTypes': 'Fuel Types',
+    'powertrainRange': 'Range',
+    'powertrainType': 'Type',
+    'powertrainTractionBatteryChargingChargeLimit': 'Charge Limit',
+    'powertrainTractionBatteryChargingIsCharging': 'Charging',
+    'powertrainTractionBatteryCurrentPower': 'Power',
+    'powertrainTractionBatteryStateOfChargeCurrent': 'Battery SOC',
+    'powertrainCombustionEngineEngineOilLevel': 'Oil Level',
+    'powertrainCombustionEngineEngineOilRelativeLevel': 'Oil Relative',
+  }
   const filteredKeys = Object.keys(keyToName);
   const filteredData: DataEntry[] = data
-    ? Object.entries(data)
+    ? Object.entries(data.signals || {})
         .filter(([key]) => filteredKeys.includes(key))
-        .map(([key, value]) => ({ name: keyToName[key], value }))
+        .map(([key, entry]) => ({ name: keyToName[key], value: entry.value }))
     : [];
 
   if (!position) {
