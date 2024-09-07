@@ -39,18 +39,18 @@ export default function Header({ data }: { data: any }) {
     }, []);
 
     return (
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pl: 3, pb: 0 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pl: 2, pb: 0 }}>
             <Box sx={{ display: 'flex', flexDirection: 'column', color: 'white' }}>
                 <Typography variant="h2" sx={{ fontWeight: 'bold', fontFamily: handjet.style.fontFamily }}>{currentTime}</Typography>
                 <Typography variant="h5" sx={{ color: '#aaa', fontFamily: handjet.style.fontFamily }}>{currentDate}</Typography>
             </Box>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, pr:3 }}>
                 <Typography variant="h5" sx={{ color: 'white', fontWeight: 'light', fontFamily: handjet.style.fontFamily }}>
                     Exterior Temperature: {carExteriorTemperatureString || 'Loading...'}°F
                 </Typography>
-                <Button variant="contained" sx={{ bgcolor: '#333', color: 'white', borderRadius: 1 }}>
+                {/* <Button variant="contained" sx={{ bgcolor: '#333', color: 'white', borderRadius: 1 }}>
                     Login
-                </Button>
+                </Button> */}
             </Box>
         </Box>
     );

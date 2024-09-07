@@ -9,7 +9,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 export default function Sidebar() {
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column'}}>
-            <Box sx={{ display: 'flex', flexDirection: 'column', pl: 4, pt: 6 }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', pl: 3, pt: 6 }}>
                 <Box
                     sx={{
                         bgcolor: '#1818FF00',

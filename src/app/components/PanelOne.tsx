@@ -64,7 +64,7 @@ const PanelOne = memo(({ data }) => {
           <Typography variant="h3" component="span" sx={{ display: 'inline', color: 'lightgrey', fontFamily: handjet.style.fontFamily, fontWeight: 'bold' }}>
             {carModel + ' ' || ' '}
           </Typography>
-          <Typography variant="h4" component="span" sx={{ display: 'inline', color: 'lightgrey', fontFamily: handjet.style.fontFamily, fontSize: '10px', fontWeight: 'light' }}>
+          <Typography variant="h4" component="span" sx={{ display: 'inline', color: 'lightgrey', fontFamily: handjet.style.fontFamily, fontWeight: 'light' }}>
             {' ' + carYear || ' '}
           </Typography>
         </Typography>
