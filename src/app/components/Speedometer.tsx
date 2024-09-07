@@ -1,6 +1,13 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 import { Font } from 'three/examples/jsm/Addons.js';
+import { Handjet } from 'next/font/google';
+
+const handjet = Handjet({
+    subsets: ['latin'],
+    weight: ['100', '300'],
+  });
+  
 
 export default function Speedometer({ speed, imageSize }) {
     // Calculate the rotation angle of the needle based on the speed
@@ -56,15 +63,18 @@ export default function Speedometer({ speed, imageSize }) {
                     sx={{
                         color: 'white',
                         fontSize: '35px',
+                        fontFamily: handjet.style.fontFamily,
+                        fontWeight: '300',
                     }}
                 >
                     {speed}
                 </Typography>
                 <Typography
-                    variant="Consolas"
                     component="div"
                     sx={{
                         color: 'white',
+                        fontFamily: handjet.style.fontFamily,
+
                         //fontSize: '0.875rem', // Adjust the font size as needed
                     }}
                 >

@@ -20,6 +20,12 @@ import ElectricCarIcon from '@mui/icons-material/ElectricCar'; // For Range, Typ
 import PowerIcon from '@mui/icons-material/Power';
 import TimerIcon from '@mui/icons-material/AccessTime';
 import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
+import { Handjet } from 'next/font/google';
+
+const handjet = Handjet({
+  subsets: ['latin'],
+  weight: ['100', '300'],
+});
 
 // Styled GlassButton definition
 const GlassButton = styled(Button)({
@@ -93,10 +99,10 @@ export default function DataButtons({ data }) {
             <GlassButton fullWidth variant="contained">
               <IconComponent sx={{ color: '#FFFFFF', mr: 2, alignSelf: 'center' }} />
               <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1, justifyContent: 'center', textAlign: 'left' }}>
-                <Typography font='Roboto' fontWeight='light' sx={{ color: '#FFFFFF', textTransform: 'none' }}>
+                <Typography font='Roboto' fontWeight='light' sx={{ color: '#FFFFFF', textTransform: 'none', fontFamily: handjet.style.fontFamily,fontSize: '1.5rem', fontWeight:"Bold" }}>
                   {name}
                 </Typography>
-                <Typography variant="body1" sx={{ color: '#FFFFFF', textTransform: 'none' }}>
+                <Typography variant="body1" sx={{ color: '#FFFFFF', textTransform: 'none', fontFamily: handjet.style.fontFamily, fontSize: '1.5rem' }}>
                   {value}
                 </Typography>
               </Box>
