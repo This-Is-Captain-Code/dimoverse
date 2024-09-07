@@ -3,9 +3,8 @@ import { Box, Typography } from '@mui/material';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import Speedometer from './Speedometer';
-import RadialChart from './RadialChart';
 import CarModel from './CarModel';
-import { DirectionalLight } from 'three';
+import { RadialBarChart, RadialBar, PolarAngleAxis  } from 'recharts';
 
 const PanelOne = memo(({ data }) => {
   const {
@@ -21,16 +20,25 @@ const PanelOne = memo(({ data }) => {
       powertrainTractionBatteryChargingChargeLimit: { value: carChargeLimit } = {}, // For Tesla
     } = {}
   } = data || {};
-  
-  // Dynamically adjust chart based on vehicle make
+
+  // Define max values for each type of data
+  const maxValues = {
+    carFuel: 100,      // 100%
+    carDistance: 500,  // Example maximum distance
+    carRPM: 8000,      // Max RPM for non-Tesla
+    carRange: 400,     // Max range for Tesla
+    carChargeLimit: 100 // 100% charge limit
+  };
+
+  // Check if the values exist and fall back to 0 if undefined
   const chartValues = carMake === 'Tesla' ? [
-    { value: carRange, label: 'Range', valueColor: 'rgb(161, 209, 241)', labelColor: 'rgb(161, 209, 241)' },
-    { value: carDistance, label: 'Distance', valueColor: 'rgb(193, 254, 212)', labelColor: 'rgb(193, 254, 212)' },
-    { value: carChargeLimit, label: 'Charge Limit', valueColor: 'rgb(149, 205, 244)', labelColor: 'rgb(149, 205, 244)' }
+    { value: carRange || 0, name: 'Range', max: maxValues.carRange, fill: 'rgb(161, 209, 241)' },
+    { value: carDistance || 0, name: 'Distance', max: maxValues.carDistance, fill: 'rgb(193, 254, 212)' },
+    { value: carChargeLimit || 0, name: 'Charge Limit', max: maxValues.carChargeLimit, fill: 'rgb(149, 205, 244)' }
   ] : [
-    { value: carFuel, label: 'Fuel', valueColor: 'rgb(161, 209, 241)', labelColor: 'rgb(161, 209, 241)' },
-    { value: carDistance, label: 'Distance', valueColor: 'rgb(193, 254, 212)', labelColor: 'rgb(193, 254, 212)' },
-    { value: carRPM, label: 'RPM', valueColor: 'rgb(149, 205, 244)', labelColor: 'rgb(149, 205, 244)' }
+    { value: carFuel || 0, name: 'Fuel', max: maxValues.carFuel, fill: 'rgb(161, 209, 241)' },
+    { value: carDistance || 0, name: 'Distance', max: maxValues.carDistance, fill: 'rgb(193, 254, 212)' },
+    { value: carRPM || 0, name: 'RPM', max: maxValues.carRPM, fill: 'rgb(149, 205, 244)' }
   ];
 
   return (
@@ -61,24 +69,36 @@ const PanelOne = memo(({ data }) => {
       </Box>
 
       <Box sx={{ flex: 1, bgcolor: 'rgba(23, 23, 23, 0.4)', borderRadius: '100px 100px 0 0', backdropFilter: 'blur(20px)', border: '1px solid rgba(255, 255, 255, 0.2)', overflowX: 'hidden' }}>
-        <Box sx={{ display: 'flex', justifyContent: 'center', height: '150px', width: '200px', gap: '0px', overflowX: 'none', pl: 17.3, pt: 1, margin: 0 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', height: '150px', width: '100%', gap: '0', overflowX: 'auto', pl: 0, pt: 2, margin: 0 }}>
+          {/* Radial Chart for each Data Type */}
           {chartValues.map((item, index) => (
-            <RadialChart
-              key={index}
-              value={item.value}
-              label={item.label}
-              valueColor={item.valueColor}
-              labelColor={item.labelColor}
-              chartHeight={200}  // Control height here
-              chartWidth={160}   // Control width here
-              fontSizeValue={'20px'}
-              hollowSize={'70%'}
-              trackStrokeWidth={'50%'}
-            />
+            <Box key={index} sx={{ textAlign: 'center' }}>
+              <RadialBarChart
+                width={120}
+                height={120}
+                innerRadius="70%"
+                outerRadius="90%"
+                barSize={10}
+                data={[{ ...item, value: (item.value / item.max) * 100 }]} // Ensure data is structured correctly for RadialBarChart
+              >
+                <PolarAngleAxis type="number" domain={[0, 100]} hide tick={false}/> {/* Ensure the chart is scaled correctly */}
+                <RadialBar
+                  minAngle={15}
+                  clockWise
+                  dataKey="value"
+                  cornerRadius={50 / 2} // Optional: Adjust for visual style
+                  fill={item.fill}
+                  background={{
+                    fill: '#222222', // Optional: Adjust background styling
+                  }}
+                />
+              </RadialBarChart>
+              <Typography sx={{ color: 'white' }}>{item.name}</Typography>
+            </Box>
           ))}
         </Box>
 
-        <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', pt: 4 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', pt: 0 }}>
           <Speedometer speed={Math.round(carSpeed)} imageSize="200px" />
         </Box>
       </Box>

@@ -1,33 +1,32 @@
 import React, { useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+import DirectionsCarFilledOutlinedIcon from '@mui/icons-material/DirectionsCarFilledOutlined';
+import { renderToString } from 'react-dom/server';
 
-interface CarMapProps {
-  position: [number, number];
-}
-
-const carIcon = new L.DivIcon({
-  html: `<div style="color: white; font-size: 60px;"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 24 24" width="1em"><path d="M0 0h24v24H0z" fill="none"/><path d="M18.92 6.01C18.72 5.42 18.14 5 17.5 5h-11c-.64 0-1.22.42-1.42 1.01L3 11v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-4.99zM6.5 7h11l1.16 3H5.34L6.5 7zM19 16H5v-4h14v4zM7.5 14c-.83 0-1.5.67-1.5 1.5S6.67 17 7.5 17s1.5-.67 1.5-1.5S8.33 14 7.5 14zm9 0c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z" fill="white"/></svg></div>`,
+// Create a custom icon using the DirectionsCar MUI Icon
+const carIconHtml = renderToString(<DirectionsCarFilledOutlinedIcon style={{ fontSize: 60, color: 'white' }} />);
+const carIcon = L.divIcon({
+  html: carIconHtml,
   className: '',
-  iconSize: [24, 24],
-  iconAnchor: [12, 12],
+  iconSize: [60, 60], // Adjust size as needed
+  iconAnchor: [30, 30], // Adjust anchor as needed
 });
 
-function FlyToLocation({ position }: { position: [number, number] }) {
+function FlyToLocation({ position }) {
   const map = useMap();
-
   useEffect(() => {
-    map.flyTo(position, 15, { duration: 2 }); // duration in seconds
-  }, [position, map]);
-
+    map.flyTo(position, 15, { duration: 2 });
+  }, [position]);
   return null;
 }
 
-export default function CarMap({ position }: CarMapProps) {
+export default function CarMap({ position }) {
   return (
     <MapContainer
-      center={[0, 0]} // Start at coordinates (0, 0)
-      zoom={2} // Start with a world view zoom level
+      center={[0, 0]}
+      zoom={2}
       scrollWheelZoom={false}
       style={{ height: '100%', width: '100%', borderRadius: 10 }}
     >

@@ -70,25 +70,8 @@ export default function PanelTwo({ data }: { data: DataType | null }) {
   }
 
   return (
-    <Box sx={{ 
-      flex: 3, 
-      bgcolor: 'rgba(30, 30, 30, 0.9)',  // Semi-transparent background for glassmorphism
-      borderRadius: 10, 
-      p: 3, 
-      color: 'white', 
-      overflowY: 'auto',
-      backdropFilter: 'blur(10px)',    // Blur effect for glassmorphism
-      border: '1px solid rgba(255, 255, 255, 0.2)', // Subtle border for a frosted glass effect
-      boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',   // Optional: Add some depth with a light shadow
-    }}>
-      <Box sx={{ 
-        height: 400, 
-        borderRadius: 10, 
-        bgcolor: 'rgba(30, 30, 30, 0.5)',  // Apply glassmorphism to the inner box as well
-        backdropFilter: 'blur(10px)', 
-        border: '1px solid rgba(255, 255, 255, 0.2)', 
-        boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)' 
-      }}>
+    <Box sx={{ flex: 3, bgcolor: 'rgba(30, 30, 30, 0.9)', borderRadius: 10, p: 3, color: 'white', overflowY: 'auto', backdropFilter: 'blur(10px)', border: '1px solid rgba(255, 255, 255, 0.2)', }}>
+      <Box sx={{ height: 400, borderRadius: 10, bgcolor: 'rgba(30, 30, 30, 0.5)', backdropFilter: 'blur(10px)', border: '1px solid rgba(255, 255, 255, 0.2)', boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)' }}>
         <CarMap position={position} />
       </Box>
       <DataButtons data={filteredData} />

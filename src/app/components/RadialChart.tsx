@@ -1,87 +1,50 @@
-import React, { useEffect, useState } from 'react';
-import dynamic from 'next/dynamic';
-import { Box } from '@mui/material';
+import React from 'react';
+import { RadialBarChart, RadialBar, Legend } from 'recharts';
 
-// Dynamically import Chart to avoid SSR issues
-const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
-
-const RadialChart = ({ 
-  value, 
-  label, 
-  valueColor, 
-  labelColor, 
-  chartHeight, 
-  chartWidth, 
-  fontSizeValue, 
-  hollowSize, 
-  trackStrokeWidth 
-}) => {
-
-  const [chartData, setChartData] = useState({
-    value: 0,
-    label: '',
-  });
-
-  useEffect(() => {
-    // Validate the value and label before rendering the chart
-    if (value !== undefined && label !== undefined) {
-      setChartData({ value, label });
+const RadialChart = ({ value, label, valueColor, labelColor, chartHeight, chartWidth }) => {
+  // Prepare the data in the format required by Recharts
+  const data = [
+    {
+      name: label,
+      value: value,
+      fill: valueColor
     }
-  }, [value, label]);
+  ];
 
-  const generateChartOptions = () => ({
-    series: [chartData.value],
-    plotOptions: {
-      radialBar: {
-        startAngle: -135,
-        endAngle: 135,
-        hollow: {
-          margin: 0,
-          size: hollowSize,
-          background: 'rgba(23, 23, 23, 0)',
-        },
-        track: {
-          background: 'rgba(23, 23, 23, 10)',
-          strokeWidth: trackStrokeWidth,
-        },
-        dataLabels: {
-          name: { color: labelColor, fontSize: '15px' },
-          value: { 
-            formatter: (val) => parseInt(val), 
-            color: valueColor, 
-            fontSize: fontSizeValue 
-          }
-        }
-      }
-    },
-    fill: { type: 'gradient', gradient: { stops: [0, 100] } },
-    stroke: { lineCap: 'round' },
-    labels: [chartData.label],
-  });
-
-  if (!chartData.value || !chartData.label) {
-    return <div>Loading...</div>; // Handle loading state while data is being prepared
-  }
+  const style = {
+    top: 0,
+    left: 350,
+    lineHeight: '24px',
+  };
 
   return (
-    <Box
-      sx={{
-        height: `${chartHeight}px`,
-        width: `${chartWidth}px`,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '0px',
-      }}
+    <RadialBarChart
+      width={chartWidth}
+      height={chartHeight}
+      cx="50%"
+      cy="50%"
+      innerRadius="70%"
+      outerRadius="100%"
+      barSize={10}
+      data={data}
     >
-      <Chart
-        options={generateChartOptions()}
-        series={[chartData.value]}
-        type="radialBar"
-        height={chartHeight}
-        width={chartWidth}
+      <RadialBar
+        minAngle={15}
+        label={{ position: 'insideStart', fill: labelColor }}
+        background
+        clockWise
+        dataKey="value"
       />
-    </Box>
+      <Legend
+        iconSize={10}
+        width={chartWidth}
+        height={chartHeight}
+        layout="horizontal"
+        verticalAlign="middle"
+        align="center"
+        wrapperStyle={style}
+      />
+    </RadialBarChart>
   );
 };
 

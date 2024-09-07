@@ -8,25 +8,32 @@ import MainContent from './components/MainContent';
 export default function Page() {
     const [data, setData] = useState(null);
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+    const [isClient, setIsClient] = useState(false); // State to check if we are on the client
 
     useEffect(() => {
+        // Check if window is defined to make sure it's only run on the client side
+        setIsClient(true);
+        
         async function fetchData() {
-            const response = await fetch('/api/hackathon');
+            const response = await fetch('/api/telemetry');
             const result = await response.json();
             setData(result);
         }
-        fetchData();
 
-        // Mouse move event listener
-        const handleMouseMove = (e: MouseEvent) => {
-            setMousePosition({ x: e.clientX, y: e.clientY });
-        };
+        if (typeof window !== 'undefined') {
+            fetchData();
 
-        window.addEventListener('mousemove', handleMouseMove);
+            // Mouse move event listener
+            const handleMouseMove = (e: MouseEvent) => {
+                setMousePosition({ x: e.clientX, y: e.clientY });
+            };
 
-        return () => {
-            window.removeEventListener('mousemove', handleMouseMove);
-        };
+            window.addEventListener('mousemove', handleMouseMove);
+
+            return () => {
+                window.removeEventListener('mousemove', handleMouseMove);
+            };
+        }
     }, []);
 
     // Memoize the background gradient to avoid unnecessary re-renders
@@ -41,6 +48,11 @@ export default function Page() {
         minHeight: '100%', // Ensure it covers the content height dynamically
         minWidth: '100vw'  // Ensure full width
     }), [mousePosition]);
+
+    if (!isClient) {
+        // Don't render anything server-side if it depends on window
+        return null;
+    }
 
     return (
         <Box sx={{ ...backgroundStyle, display: 'flex', minHeight: '100vh' }}>
