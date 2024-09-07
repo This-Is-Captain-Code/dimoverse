@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Typography } from '@mui/material';
-import CarMap from './CarMap';
 import DataButtons from './DataButtons';
+import dynamic from 'next/dynamic';
+
+const CarMap = dynamic(() => import('./CarMap'), {
+  ssr: false,
+});
 
 interface DataType {
   [key: string]: any;
@@ -70,11 +74,51 @@ export default function PanelTwo({ data }: { data: DataType | null }) {
   }
 
   return (
-    <Box sx={{ flex: 3, bgcolor: 'rgba(30, 30, 30, 0.9)', borderRadius: 10, p: 3, color: 'white', overflowY: 'auto', backdropFilter: 'blur(10px)', border: '1px solid rgba(255, 255, 255, 0.2)', }}>
-      <Box sx={{ height: 400, borderRadius: 10, bgcolor: 'rgba(30, 30, 30, 0.5)', backdropFilter: 'blur(10px)', border: '1px solid rgba(255, 255, 255, 0.2)', boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)' }}>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        flex: 3,
+        bgcolor: 'rgba(30, 30, 30, 0.9)',
+        borderRadius: 10,
+        p: 2,
+        color: 'white',
+        overflowY: 'auto',
+        backdropFilter: 'blur(10px)',
+        border: '1px solid rgba(255, 255, 255, 0.2)',
+      }}
+    >
+      {/* Map Section */}
+      <Box
+        sx={{
+          flex: 2,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderRadius: 10,
+          height: '100%',
+          bgcolor: 'rgba(30, 30, 30, 0.5)',
+          backdropFilter: 'blur(10px)',
+          border: '1px solid rgba(255, 255, 255, 0.2)',
+          boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
+          mb: 0, // Add some margin below the map box
+        }}
+      >
         <CarMap position={position} />
       </Box>
-      <DataButtons data={filteredData} />
+
+      {/* Data Buttons Section */}
+      <Box
+        sx={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          padding: 0,
+        }}
+      >
+        <DataButtons data={filteredData} />
+      </Box>
     </Box>
   );
 }

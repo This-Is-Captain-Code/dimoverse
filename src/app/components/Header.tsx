@@ -39,7 +39,7 @@ export default function Header({ data }: { data: any }) {
     }, []);
 
     return (
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pl: 3, pb: 1 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pl: 3, pb: 0 }}>
             <Box sx={{ display: 'flex', flexDirection: 'column', color: 'white' }}>
                 <Typography variant="h2" sx={{ fontWeight: 'bold', fontFamily: handjet.style.fontFamily }}>{currentTime}</Typography>
                 <Typography variant="h5" sx={{ color: '#aaa', fontFamily: handjet.style.fontFamily }}>{currentDate}</Typography>

@@ -85,10 +85,10 @@ export default function DataButtons({ data }) {
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
         gap: 1,
-        marginTop: 4,
+        marginTop: 0,
         gridAutoRows: 'min-content',
-        maxHeight: 'calc(240px * 2 + 16px)', // Adjust height to fit two rows
-        overflowY: 'auto', // Enable scrolling for extra rows
+        maxHeight: 'calc(80px * 2 + 32px)', // Adjust height to fit two rows of buttons
+        overflowY: 'auto', // Enable scrolling if more than two rows
         padding: '0 16px', // Optional padding for better layout
       }}
     >
@@ -96,10 +96,10 @@ export default function DataButtons({ data }) {
         const IconComponent = iconMapping[name] || SatelliteIcon;
         return (
           <Box key={name} sx={{ flex: 2, mb: 0 }}>
-            <GlassButton fullWidth variant="contained">
+            <GlassButton fullWidth variant="contained" sx={{border: '1px solid rgba(255, 255, 255, 0.2)'}}>
               <IconComponent sx={{ color: '#FFFFFF', mr: 2, alignSelf: 'center' }} />
-              <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1, justifyContent: 'center', textAlign: 'left' }}>
-                <Typography font='Roboto' fontWeight='light' sx={{ color: '#FFFFFF', textTransform: 'none', fontFamily: handjet.style.fontFamily,fontSize: '1.5rem', fontWeight:"Bold" }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 0, justifyContent: 'center', textAlign: 'left' }}>
+                <Typography font='Roboto' fontWeight='light' sx={{ color: '#FFFFFF', textTransform: 'none', fontFamily: handjet.style.fontFamily, fontSize: '1.5rem', fontWeight: 'Bold' }}>
                   {name}
                 </Typography>
                 <Typography variant="body1" sx={{ color: '#FFFFFF', textTransform: 'none', fontFamily: handjet.style.fontFamily, fontSize: '1.5rem' }}>
@@ -111,6 +111,5 @@ export default function DataButtons({ data }) {
         );
       })}
     </Box>
-
   );
 }
