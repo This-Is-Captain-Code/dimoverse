@@ -69,9 +69,9 @@ const PanelOne = memo(({ data }) => {
           </Typography>
         </Typography>
 
-        <Box sx={{ height: 300, width: '100%' }}>
+        <Box sx={{ height:'35vh', width: '100%' }}>
           <Canvas>
-            <PerspectiveCamera makeDefault fov={20} position={[0, 0, 30]} />
+            <PerspectiveCamera makeDefault fov={20} position={[0, 10, 30]} />
             <ambientLight intensity={2} />
             <pointLight position={[100, 100, 100]} />
             <directionalLight color='white' intensity={20} />
@@ -105,7 +105,7 @@ const PanelOne = memo(({ data }) => {
           </Box>
 
           <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-            <Speedometer speed={Math.round(carSpeed)} imageSize="200px" />
+            <Speedometer speed={Math.round(carSpeed)} imageSize="22vh" />
           </Box>
         </Box>
       </Box>

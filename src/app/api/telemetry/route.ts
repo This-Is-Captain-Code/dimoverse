@@ -3,8 +3,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import axios from 'axios';
 
 const dimo = new DIMO('Production');
-const accessToken = process.env.ACCESS_TOKEN;; // Replace with a secure method for storing tokens
-const tokenId = 21957;
+const accessToken = process.env.ACCESS_TOKEN;
+const tokenId = Number(process.env.TOKEN_ID);
 
 // Fetch all available signals dynamically
 const getAvailableSignals = async (privilegeToken: string, tokenId: number) => {

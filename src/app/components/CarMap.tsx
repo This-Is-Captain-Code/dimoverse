@@ -29,7 +29,7 @@ function FlyToLocation({ position }) {
 
   useEffect(() => {
     if (map) {
-      map.flyTo(position, 15, { duration: 10 });
+      map.flyTo(position, 15, { duration: 2 });
     }
   }, [position, map]);
 

@@ -2,10 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import axios from 'axios';
 import { DIMO } from '@dimo-network/dimo-node-sdk';
 
-// Replace these with secure methods for handling your tokens
 const dimo = new DIMO('Production');
-const accessToken = 'eyJhbGciOiJSUzI1NiIsImtpZCI6IjMzMjU3ZDFiZjliZTdlNTg4ZDM1OTI3MzhhMmFhOTY5ODU3NWM4OTEifQ.eyJpc3MiOiJodHRwczovL2F1dGguZGltby56b25lIiwicHJvdmlkZXJfaWQiOiJ3ZWIzIiwic3ViIjoiQ2lvd2VHRkVPVEJCTlRZMU4wRXpNMEl5TlRVM016VTVRV0l4T1dGaE9UUTRNREpHTnpNM00wWTNPRGNTQkhkbFlqTSIsImF1ZCI6IjB4YUQ5MEE1NjU3QTMzQjI1NTczNTlBYjE5YWE5NDgwMkY3MzczRjc4NyIsImV4cCI6MTcyNjUyODI5NCwiaWF0IjoxNzI1MzE4Njk0LCJhdF9oYXNoIjoiZEpCODFnZlp4eGFnemFWWDFyUVYwUSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZXRoZXJldW1fYWRkcmVzcyI6IjB4YUQ5MEE1NjU3QTMzQjI1NTczNTlBYjE5YWE5NDgwMkY3MzczRjc4NyJ9.VM47fK07iJLteOmffwEE68gjPFVuZ3YZscrZuDlkteKz3oHdAislYPq3M2rOEZ4KMrvu-b7CqXSB0lfJCTr0yz_o-qbwSPnZ_2fn8DY85InTaLxJeiqLCkoaTudDm2aLG-05ea75Km6e_5XfounOYJhBgHP2gMrad4x4HDnisQztQbE4K0hGUo09d8KBElVEaDAbnRIYvepcohgOQHnxDJUGBX06hN_GLT1x3_OcFH_yZr3KEqTqdc0U2X3mCyW3CKV0tyDcC0HmhNXDVmCRboQrIBfn1C0wYmvlxyMKTYbHlUPH1mhTcRQxdiSF8PO8r4pyKc8plmz6ElR2lGdcNA';
-const tokenId = 21957; // Replace with dynamic tokenId if needed
+const accessToken = process.env.ACCESS_TOKEN;;
+const tokenId = Number(process.env.TOKEN_ID);
 
 // Function to fetch the trips
 const getAllTrips = async (privilegeToken: string, tokenId: number) => {
